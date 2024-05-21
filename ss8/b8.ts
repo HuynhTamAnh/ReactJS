@@ -30,3 +30,6 @@ let Students2: Array<Student>;
 
 type Numbers = number;
 let b: Numbers;
+//typeof null=object
+//typeof array=object
+//vì không thuộc những kiểu dữ liệu còn lại

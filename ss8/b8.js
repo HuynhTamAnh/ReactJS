@@ -20,3 +20,6 @@ nameStudent2 = "hhhhh";
 let students;
 let Students2;
 let b;
+//typeof null=object
+//typeof array=object
+//vì không thuộc những kiểu dữ liệu còn lại
