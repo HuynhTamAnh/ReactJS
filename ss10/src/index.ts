@@ -24,7 +24,9 @@
 //     return this.weight;
 //   }
 //   //setter: thay đổi giá trị của các thuộc tính dựa vào tham số truyền vào
+//kiểm tra quyền trong phương thức
 //   public setSex(sex1: boolean) {
+//kiểm tra quyền
 //     this.sex = sex1;
 //   }
 //   public setHeight(height1: number) {

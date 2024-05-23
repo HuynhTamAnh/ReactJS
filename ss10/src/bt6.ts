@@ -16,6 +16,7 @@ class Song {
   public getLength() {
     return this.length;
   }
+  //readonly không thay đổi được
   //   public setId(id: string) {
   //     this.id = id;
   //   }
