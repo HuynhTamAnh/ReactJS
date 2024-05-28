@@ -4,19 +4,75 @@
 // Tạo 6 thực thể từ lớp Student và thêm vào mảng tất cả học sinh.
 // Tạo 2 thực thể từ lớp Classroom và thêm học sinh cho chúng, mỗi lớp học sẽ có 3 học sinh.
 class Student {
-    constructor(_id, _name) {
-        this.id = _id;
-        this.name = _name;
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+    getId() {
+        return this.id;
+    }
+    getName() {
+        return this.name;
     }
 }
 class Classroom {
-    constructor(_students) {
-        this.students = _students;
+    constructor() {
+        this.students = [];
     }
-    addStudent() {
-        //thêm học sinh vào trong lớp
+    addStudentById(studentId, allStudents) {
+        const index = allStudents.findIndex((student) => student.getId() === studentId);
+        if (index !== -1) {
+            this.students.push(allStudents[index]);
+            allStudents.splice(index, 1); // Xóa học sinh khỏi mảng tất cả học sinh
+        }
     }
     showStudents() {
-        //hiển thị học sinh
+        this.students.forEach((student) => {
+            console.log(`ID: ${student.getId()}, Name: ${student.getName()}`);
+        });
+    }
+    removeStudent(id) {
+        this.students = this.students.filter((student) => student.getId() !== id);
+    }
+    editStudent(id, newName) {
+        const student = this.students.find((student) => student.getId() === id);
+        if (student) {
+            student.name = newName; // Ép kiểu để cập nhật tên
+        }
     }
 }
+// Tạo mảng để chứa tất cả học sinh
+let allStudents = [
+    new Student(1, "Kha"),
+    new Student(2, "Ha"),
+    new Student(3, "TA"),
+    new Student(4, "Tran"),
+    new Student(5, "Ngoc"),
+    new Student(6, "Hao"),
+];
+// Tạo 2 thực thể từ lớp Classroom
+let classroom1 = new Classroom();
+let classroom2 = new Classroom();
+// Thêm 3 học sinh vào mỗi lớp từ mảng tất cả học sinh
+classroom1.addStudentById(1, allStudents);
+classroom1.addStudentById(2, allStudents);
+classroom1.addStudentById(3, allStudents);
+classroom2.addStudentById(4, allStudents);
+classroom2.addStudentById(5, allStudents);
+classroom2.addStudentById(6, allStudents);
+// Hiển thị danh sách học sinh trong mỗi lớp
+console.log("Classroom 1 Students:");
+classroom1.showStudents();
+console.log("Classroom 2 Students:");
+classroom2.showStudents();
+// Xóa học sinh theo ID
+let idToDelete = Number(window.prompt("Nhập ID muốn xóa từ lớp 1:"));
+classroom1.removeStudent(idToDelete);
+console.log("Sau khi xóa, danh sách lớp 1:");
+classroom1.showStudents();
+// Sửa tên học sinh theo ID
+let idToEdit = Number(window.prompt("Nhập ID muốn sửa trong lớp 2:"));
+let newName = window.prompt("Nhập tên mới:");
+classroom2.editStudent(idToEdit, newName);
+console.log("Sau khi sửa, danh sách lớp 2:");
+classroom2.showStudents();
