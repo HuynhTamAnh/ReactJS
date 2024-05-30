@@ -1,40 +1,43 @@
+// Viết một hàm decorator function để validates tham số truyền vào hàm. Hàm phải sử dụng hàm validation như tham số. Nếu hàm validation trả về “true” cho tham số được truyền vào, thì hàm decorator sẽ được thực thi, còn nếu ngược lại thì trả về lỗi errors.
+type PredicateFn = (a: number) => boolean;
 
-type ValidationFunction<T extends any[]> = (...args: T) => boolean;
-
-function validateParameters<T extends (...args: any[]) => any>(
-  targetFunction: T,
-  validationFunction: ValidationFunction<Parameters<T>>
-): T {
-  return function (...args: Parameters<T>): ReturnType<T> {
-    if (validationFunction(...args)) {
-      return targetFunction.apply(add3, args);
-    } else {
-      throw new Error("Invalid arguments provided.");
-    }
-  } as T;
+function validate(validateFn: PredicateFn) {
+  return function (
+    target: any,
+    propertyName: string,
+    descriptor: PropertyDescriptor
+  ) {
+    //logic
+    //lấy hàm cần xử lý
+    let div = descriptor.value; //trước khi chỉnh sửa
+    console.log(div);
+    descriptor.value = (a: number, b: number) => {
+      if (validateFn(b)) {
+        return div(a, b);
+      } else {
+        throw new Error("không thể chia cho 0");
+      }
+    };
+  };
 }
 
-function validateAddArguments(a: number, b: number): boolean {
-  return typeof a === "number" && typeof b === "number" && a >= 0 && b >= 0;
+//kiểm tra xem có a=0 không thì sai
+const checkNumber = (a: number) => {
+  return true;
+};
+
+// @classDecorator
+class Test {
+  @validate(checkNumber)
+  div(a: number, b: number) {
+    return a / b;
+  }
+  checkAge(_age: number) {
+    //return age>0;
+    //nếu tuổi nhập vào <0 => tuổi =0
+  }
 }
 
-
-function add3(a: number, b: number): number {
-  return a + b;
-}
-
-
-const validatedAdd = validateParameters(add3, validateAddArguments);
-
-try {
-  console.log(validatedAdd(5, 3)); 
-  console.log(validatedAdd(-1, 3)); 
-} catch (error) {
-  console.error(error.message);
-}
-
-try {
-  console.log(validatedAdd(5, "3" as any)); /
-} catch (error) {
-  console.error(error.message);
-}
+let test = new Test();
+console.log(test.div(3, 2));
+console.log(test.div(3, 2));

@@ -57,11 +57,20 @@ function beforeSum(target, propertyKey, descriptor) {
     };
 }
 //properties decoration
-function x2(target, propertyKey, descriptor) {
-    console.log(target);
-    console.log(propertyKey);
-    console.log(descriptor);
-}
+// function x2(target: any, propertyKey: string) {
+//   console.log(target);
+//   console.log(propertyKey);
+//   Object.defineProperty(target, propertyKey, {
+//     get() {
+//       return this[propertyKey] * 2;
+//     },
+//     set(value) {
+//       console.log(value);
+//       this[propertyKey] = value * 2;
+//     },
+//   });
+//   //reflection: kĩ thuật can thiệp trực tiếp vào đối tượng thông qua tên (TÌM HIỂU THÊM)
+// }
 //tạo 1 hàm pow return và trả về decorator method
 function pow(value) {
     return function (target, propertyKey, descriptor) {
@@ -100,6 +109,9 @@ let Student = class Student {
         console.log("gọi set");
         this.id;
     }
+    get age1() {
+        return this.age;
+    }
 };
 __decorate([
     follow,
@@ -119,14 +131,30 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], Student.prototype, "luyThua", null);
+__decorate([
+    x3,
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [])
+], Student.prototype, "age1", null);
 Student = __decorate([
     logger,
     __metadata("design:paramtypes", [Number, String, Number])
 ], Student);
+function x3(target, propertyKey, descriptor) {
+    let old = descriptor.get;
+    descriptor.get = () => {
+        return 100;
+    };
+}
 let student = new Student(1, "who", 19);
 console.log(student);
 student.greet();
 student.sum(1, 3);
 student.id1 = 10;
 console.log(student.luyThua(5));
+console.log(student.id);
+console.log(student.age1);
+//class 1 tham số
+//property 2 tham số
+//method 3 tham số
 //các loại decorator

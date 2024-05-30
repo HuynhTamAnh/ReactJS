@@ -50,11 +50,20 @@ function beforeSum(
   };
 }
 //properties decoration
-function x2(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  console.log(target);
-  console.log(propertyKey);
-  console.log(descriptor);
-}
+// function x2(target: any, propertyKey: string) {
+//   console.log(target);
+//   console.log(propertyKey);
+//   Object.defineProperty(target, propertyKey, {
+//     get() {
+//       return this[propertyKey] * 2;
+//     },
+//     set(value) {
+//       console.log(value);
+//       this[propertyKey] = value * 2;
+//     },
+//   });
+//   //reflection: kĩ thuật can thiệp trực tiếp vào đối tượng thông qua tên (TÌM HIỂU THÊM)
+// }
 
 //tạo 1 hàm pow return và trả về decorator method
 function pow(value: number) {
@@ -79,7 +88,9 @@ function pow(value: number) {
 class Student {
   id: number;
   name: string;
+  // @x2
   age: number;
+
   constructor(id: number, name: string, age: number) {
     this.id = id;
     this.name = name;
@@ -108,6 +119,19 @@ class Student {
     console.log("gọi set");
     this.id;
   }
+  @x3
+  public get age1() {
+    return this.age;
+  }
+  // set age1(age: number) {
+  //   this.age;
+  // }
+}
+function x3(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  let old = descriptor.get;
+  descriptor.get = () => {
+    return 100;
+  };
 }
 
 let student = new Student(1, "who", 19);
@@ -116,5 +140,9 @@ student.greet();
 student.sum(1, 3);
 student.id1 = 10;
 console.log(student.luyThua(5));
-
+console.log(student.id);
+console.log(student.age1);
+//class 1 tham số
+//property 2 tham số
+//method 3 tham số
 //các loại decorator
