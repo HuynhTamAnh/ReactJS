@@ -10,7 +10,8 @@
 
 import React, { Component } from "react";
 
-import "./css/table.css";
+// import "./css/table.css";
+
 class Table extends Component {
   //thuộc tính, constructor, method
   //state: trạng thái của component: thông tin về component
@@ -27,22 +28,13 @@ class Table extends Component {
     //js ở đây
     return (
       <div>
-        <table className="hehe">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>name</th>
-              <th>class</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>aaa</td>
-              <td>ks</td>
-            </tr>
-          </tbody>
-        </table>
+        <h1>Danh sách khoá học</h1>
+        <ol>
+          <li> HTML</li>
+          <li> CSS</li>
+          <li> JavaScript</li>
+          <li> ReactJS</li>
+        </ol>
       </div>
     );
     //trả về JSX
@@ -52,4 +44,4 @@ class Table extends Component {
 // Table.prototypes={
 //     data:string;
 // }
-// export default Table;
+export default Table;
