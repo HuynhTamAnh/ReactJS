@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/b4.css";
-class ColorBox extends React.Component {
+class B4 extends React.Component {
   render() {
     // Hiển thị hộp màu với kiểu đã định nghĩa
     return (
@@ -12,4 +12,4 @@ class ColorBox extends React.Component {
   }
 }
 
-export default ColorBox;
+export default B4;
