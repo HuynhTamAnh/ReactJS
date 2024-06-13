@@ -16,12 +16,17 @@ import { Component } from "react";
 // import Exercise3 from "./components/SS29/BT3/Exercise3";
 // import Exercise4 from "./components/SS29/BT4/Exercise4";
 // import index from "./components/Lifecycle/BT1/index";
-import BT1 from "./components/Lifecycle/BT1/index";
-import BT2 from "./components/Lifecycle/BT2";
-import BT3 from "./components/Lifecycle/BT3";
-import BT9 from "./components/Lifecycle/BT9";
-import BT4 from "./components/Lifecycle/BT4";
-import EmailForm from "./components/SS31/BT1/EmailForm";
+// import BT1 from "./components/SS35/BT2/index";
+import BT2 from "./components/SS35/BT2";
+import TodoList from "./components/SS32-33-34/BT1/TodoList";
+import BT3 from "./components/SS35/BT3";
+import BT4 from "./components/SS35/BT4";
+import BT5 from "./components/SS35/BT5";
+import BT6 from "./components/SS35/BT6";
+// import BT3 from "./components/Lifecycle/BT3";
+// import BT9 from "./components/Lifecycle/BT9";
+// import BT4 from "./components/Lifecycle/BT4";
+// import EmailForm from "./components/SS31/BT1/EmailForm";
 // import Modal from "./components/SS29/BT12/Modal";
 
 // import { Modal } from "react-bootstrap";
@@ -86,7 +91,12 @@ class App extends Component {
         {/* <BT7 /> */}
         {/* <BT4 /> */}
         {/* <BT9 /> */}
-        <EmailForm />
+        {/* <EmailForm /> */}
+        {/* <BT1 /> */}
+        {/* <BT2 /> */}
+        {/* <TodoList /> */}
+        {/* <BT3 /> */}
+        <BT6 />
       </div>
     );
   }
