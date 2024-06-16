@@ -20,6 +20,7 @@ type Todo = {
 
 type StateType = {
   todos: Todo[];
+  newTitle: string;
   editId: number | null;
   editTitle: string;
 };
@@ -32,6 +33,7 @@ export default class TodoList extends Component<{}, StateType> {
         { id: 1, title: "học toán", status: false },
         { id: 2, title: "học code", status: true },
       ],
+      newTitle: "",
       editId: null,
       editTitle: "",
     };
@@ -46,7 +48,6 @@ export default class TodoList extends Component<{}, StateType> {
       return todo;
     });
     this.setState({
-      ...this.state,
       todos: newTodos,
     });
   };
@@ -55,7 +56,6 @@ export default class TodoList extends Component<{}, StateType> {
     if (window.confirm("chắc chưa?")) {
       let newTodos = this.state.todos.filter((todo) => todo.id !== id);
       this.setState({
-        ...this.state,
         todos: newTodos,
       });
     }
@@ -88,18 +88,40 @@ export default class TodoList extends Component<{}, StateType> {
     });
   };
 
+  handleAddChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      newTitle: e.target.value,
+    });
+  };
+
+  addTodo = () => {
+    if (this.state.newTitle.trim() !== "") {
+      const newTodo: Todo = {
+        id: this.state.todos.length
+          ? Math.max(...this.state.todos.map((todo) => todo.id)) + 1
+          : 1,
+        title: this.state.newTitle,
+        status: false,
+      };
+      this.setState((prevState) => ({
+        todos: [...prevState.todos, newTodo],
+        newTitle: "",
+      }));
+    }
+  };
+
   render() {
     return (
       <div>
         <h1>Danh sách công việc</h1>
         <InputGroup className="mb-3">
           <Form.Control
-            placeholder="Enter..."
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            placeholder="Thêm công việc..."
+            value={this.state.newTitle}
+            onChange={this.handleAddChange}
           />
-          <Button variant="outline-secondary" id="button-addon2">
-            Search
+          <Button variant="primary" onClick={this.addTodo}>
+            Thêm
           </Button>
         </InputGroup>
 
@@ -125,7 +147,7 @@ export default class TodoList extends Component<{}, StateType> {
                         variant="success"
                         onClick={() => this.saveEdit(todo.id)}
                       >
-                        Save
+                        Lưu
                       </Button>
                     </InputGroup>
                   ) : (
