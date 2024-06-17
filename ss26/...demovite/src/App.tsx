@@ -27,6 +27,8 @@ import BT7 from "./components/SS35/BT7";
 import BT8 from "./components/SS35/BT8";
 import BT10 from "./components/SS35/BT10";
 import BT11 from "./components/SS35/BT11-12";
+import Mycomp from "./components/SS35/ontap/Mycomp";
+import TodoManager from "./components/SS35/ontap/baitaptonghop/todoManager";
 // import BT3 from "./components/Lifecycle/BT3";
 // import BT9 from "./components/Lifecycle/BT9";
 // import BT4 from "./components/Lifecycle/BT4";
@@ -104,7 +106,9 @@ class App extends Component {
         {/* <BT7 /> */}
         {/* <BT8 /> */}
         {/* <BT10 /> */}
-        <BT11 />
+        {/* <BT11 /> */}
+        {/* <Mycomp /> */}
+        <TodoManager />
       </div>
     );
   }
