@@ -9,7 +9,7 @@ export default class ColorForm extends Component<{}, StateType> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      color: "#000000", // Màu khởi tạo
+      color: "#000000",
       submitted: false,
     };
   }
