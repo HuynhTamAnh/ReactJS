@@ -1,0 +1,166 @@
+* {
+  font-family: sans-serif;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+header {
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+header p {
+  margin: 0;
+  flex: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+select {
+  padding: 5px;
+  font-size: 16px;
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+
+.custom-navbar {
+  justify-content: space-between;
+  padding-right: 80px;
+  padding-left: 140px;
+}
+
+.custom-navbar .navbar-nav {
+  flex-direction: row;
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.custom-navbar .form-inline {
+  display: flex;
+  align-items: center;
+}
+
+.body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.left {
+  flex: 1;
+  padding: 20px;
+}
+
+.left img {
+  max-width: 100%;
+  height: auto;
+  margin-left: -20px;
+  width: 100%;
+}
+
+.right {
+  flex: 1;
+  padding: 20px;
+}
+
+.custom-input {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 0;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.custom-input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#forget {
+  color: red;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right,
+.footer-quick-link,
+.footer-app-download {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-app-download {
+  display: flex;
+  align-items: center;
+}
+
+.app-download {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.app-icons {
+  display: flex;
+  align-items: center;
+}
+
+.app-icons img {
+  height: 40px;
+  margin-right: 10px;
+}
+#trai {
+  height: 80px;
+  width: 80px;
+}
+.apps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.apps svg {
+  margin-top: 5px;
+  width: 30px;
+  height: auto;
+  margin-right: 15px;
+  margin-left: 10px;
+}

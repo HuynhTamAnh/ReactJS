@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Component } from "react";
 import BT5 from "./components/SS36/Luyện tập/BT5";
 import BT6 from "./components/SS36/Luyện tập/BT6";
+import Login from "./components/Luyện tập/login";
 
 // import { Modal } from "react-bootstrap";
 
@@ -85,7 +86,8 @@ class App extends Component {
         {/* <BT1 /> */}
         {/* <BT4 /> */}
         {/* <BT5 /> */}
-        <BT6 />
+        {/* <BT6 /> */}
+        <Login />
       </div>
     );
   }
