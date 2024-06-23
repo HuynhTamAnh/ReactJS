@@ -1,0 +1,42 @@
+export const data = [
+  {
+    id: 1,
+    name: "Nguyễn Văn A",
+    dateOfbirth: "28/12/2222",
+    email: "nvana@gmail.com",
+    address: "Ba Đình, Hà Nội",
+    status: true,
+  },
+  {
+    id: 2,
+    name: "Trần Thị B",
+    dateOfbirth: "28/12/4437",
+    email: "tthib@gmail.com",
+    address: "Ba Đình, Hà Nội",
+    status: false,
+  },
+  {
+    id: 3,
+    name: "Lê Văn C",
+    dateOfbirth: "24/78/4357",
+    email: "lvanc@gmail.com",
+    address: "Ba Đình, Hà Nội",
+    status: false,
+  },
+  {
+    id: 4,
+    name: "Phạm Thị D",
+    dateOfbirth: "78/34/3745",
+    email: "pthid@gmail.com",
+    address: "Ba Đình, Hà Nội",
+    status: true,
+  },
+  {
+    id: 5,
+    name: "Ngô Văn D",
+    dateOfbirth: "32/02/6545",
+    email: "nvand@gmail.com",
+    address: "Ba Đình, Hà Nội",
+    status: false,
+  },
+];
