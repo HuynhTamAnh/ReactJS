@@ -1,0 +1,16 @@
+.input-group-text {
+  background-color: #ffffff;
+  border-right: none;
+}
+
+.form-control {
+  border-left: none;
+}
+
+.fa-bell {
+  cursor: pointer;
+}
+
+img {
+  cursor: pointer;
+}
