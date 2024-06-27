@@ -2,9 +2,21 @@ import React from "react";
 import { Col, Form, Row, InputGroup } from "react-bootstrap";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/SearchComp.css"; // Đảm bảo rằng bạn có file CSS này
+import "../css/SearchComp.css";
 
-const SearchComp = () => {
+type SearchCompProps = {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+};
+
+const SearchComp: React.FC<SearchCompProps> = ({
+  searchQuery,
+  setSearchQuery,
+}) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <div>
       <Form>
@@ -18,6 +30,8 @@ const SearchComp = () => {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-4"
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
             </InputGroup>
           </Col>

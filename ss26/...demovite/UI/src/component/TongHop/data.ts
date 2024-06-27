@@ -1,0 +1,51 @@
+import { Bill } from "./types";
+export const data: Bill[] = [
+  {
+    invoiceId: "B01",
+    date: "23/09/2022",
+    customer: "Jacob Marcus",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+  {
+    invoiceId: "B02",
+    date: "23/09/2022",
+    customer: "Alibaba Nguyễn",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+  {
+    invoiceId: "B03",
+    date: "23/09/2022",
+    customer: "Aladin Trần",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+  {
+    invoiceId: "B04",
+    date: "23/09/2022",
+    customer: "Trung Mickey",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+  {
+    invoiceId: "B05",
+    date: "23/09/2022",
+    customer: "Hùng Euro",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+  {
+    invoiceId: "B06",
+    date: "23/09/2022",
+    customer: "Yummy",
+    payable: "$100",
+    paid: "$000",
+    due: "$000",
+  },
+];
