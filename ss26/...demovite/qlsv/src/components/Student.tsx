@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { data as initData } from "./data";
 import React from "react";
 import "./css/Student.css";
+
 type Action = "ADD" | "EDIT" | "DELETE" | "BLOCK" | "";
 
 type Student = {
@@ -29,7 +30,7 @@ const Student = () => {
   const [selected, setSelected] = useState<Student>(initState); // dùng để lưu trữ đối tượng đang thao tác ()
   const [size, setSize] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  //
+  const [searchQuery, setSearchQuery] = useState(""); // state to manage search query
 
   const handleOpenModal = (action: Action) => {
     setAction(action); // thay đổi hành động
@@ -98,17 +99,25 @@ const Student = () => {
     setIsOpen(false);
   };
 
-  //tính tổng số trang
+  // handle search query change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // tính tổng số trang
   const totalPages = useMemo(() => {
     return Math.ceil(data.length / size);
   }, [data, size]);
 
-  //lọc các phần tử theo size
+  // lọc các phần tử theo size và search query
   const filterData = useMemo(() => {
+    const filtered = data.filter((stu) =>
+      stu.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     const start = (currentPage - 1) * size;
     const end = currentPage * size; //start<=index<=end
-    return data.slice(start, end);
-  }, [data, currentPage, size]);
+    return filtered.slice(start, end);
+  }, [data, currentPage, size, searchQuery]);
 
   return (
     <>
@@ -130,6 +139,8 @@ const Student = () => {
                 type="text"
                 className="form-control"
                 placeholder="Tìm kiếm theo email"
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
               <i className="fa-solid fa-arrows-rotate" title="Refresh" />
             </div>
@@ -215,7 +226,11 @@ const Student = () => {
               </tbody>
             </table>
             <footer className="d-flex justify-content-end align-items-center gap-3">
-              <select className="form-select" defaultValue={20}>
+              <select
+                className="form-select"
+                defaultValue={20}
+                onChange={(e) => setSize(Number(e.target.value))}
+              >
                 <option value={10}>Hiển thị 10 bản ghi trên trang</option>
                 <option value={20}>Hiển thị 20 bản ghi trên trang</option>
                 <option value={50}>Hiển thị 50 bản ghi trên trang</option>
@@ -240,11 +255,12 @@ const Student = () => {
                       className={`page-item ${
                         currentPage == page ? "active" : ""
                       }`}
+                      key={index}
                     >
                       <a
                         className="page-link"
                         href="#"
-                        onClick={() => setCurrentPage(currentPage + 1)}
+                        onClick={() => setCurrentPage(page)}
                       >
                         {index + 1}
                       </a>
@@ -388,4 +404,5 @@ const Student = () => {
     </>
   );
 };
+
 export default Student;
