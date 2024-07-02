@@ -9,7 +9,6 @@ import Content1 from "./component/TongHop/Content1";
 import List from "./component/TongHop/List";
 import { data as initData } from "./component/TongHop/data";
 
-// Import components for other pages
 import LabTest from "./component/pages/LabTest";
 import Appointment from "./component/pages/Appointment";
 import MedicineOrder from "./component/pages/MedicineOrder";
