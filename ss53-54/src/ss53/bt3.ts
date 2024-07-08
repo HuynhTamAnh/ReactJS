@@ -26,4 +26,3 @@ const processArray = (intArr: number[], callback: Function) => {
 processArray([1, 2, 3, 4, 5], (a: number) => {
   console.log(a);
 });
-// cách của HuyPT
