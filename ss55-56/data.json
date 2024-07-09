@@ -4,12 +4,6 @@
   "limit": 10,
   "author": [
     {
-      "id": "a1",
-      "title": "Bài viết đầu tiên",
-      "content": "Nội dung của bài viết đầu tiên",
-      "createdAt": "2024-01-01T00:00:00Z"
-    },
-    {
       "id": "a2",
       "title": "Bài viết thứ hai",
       "content": "Nội dung của bài viết thứ ba",
