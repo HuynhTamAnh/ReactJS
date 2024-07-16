@@ -8,5 +8,6 @@ export const userReducer6 = (
       return "RikkeiSoft";
     default:
       return state;
+    // change code
   }
 };
