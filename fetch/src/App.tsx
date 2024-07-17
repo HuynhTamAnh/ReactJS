@@ -16,6 +16,7 @@ import {
 } from "./store/actions";
 import { store, StoreInterface } from "./store";
 import { userReducer4 } from "./store/reducers/userReducer4";
+import { decrement, increment, powerUp } from "./store/reducers";
 
 // interface Post {
 //   title: string;
@@ -105,10 +106,10 @@ function App() {
   //   const randomNumber = Math.floor(Math.random() * 100) + 1;
   //   dispatch(act_random_number(randomNumber));
   // };
-  const word = useSelector((state: StoreInterface) => state.userStore6);
-  const changeWord = () => {
-    dispatch(act_change_word());
-  };
+  const num = useSelector((state: StoreInterface) => state.countSlice);
+  // const changeWord = () => {
+  //   dispatch(act_change_word());
+  // };
 
   return (
     // <div className="container">
@@ -144,8 +145,8 @@ function App() {
     //   <div>{inf?.address}</div>
     // </div>
     <div className="container mt-5">
-      <button onClick={changeWord}>bấm</button>
-      <p>{word}</p>
+      <button onClick={() => dispatch(increment(1))}>bấm</button>
+      <p>{num}</p>
     </div>
   );
 }
