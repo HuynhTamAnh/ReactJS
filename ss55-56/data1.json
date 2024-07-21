@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Cam Tươi",
+      "image": "https://example.com/images/cam-tuoi.jpg",
+      "price": "12.000 đ",
+      "quantity": 12,
+      "date": "25/03/2024"
+    },
+    {
+      "id": 2,
+      "name": "Táo lê",
+      "image": "https://example.com/images/tao-le.jpg",
+      "price": "25.000 đ",
+      "quantity": 150,
+      "date": "15/02/2024"
+    },
+    {
+      "id": 3,
+      "name": "Xoài",
+      "image": "https://example.com/images/xoai.jpg",
+      "price": "30.000 đ",
+      "quantity": 102,
+      "date": "28/06/2024"
+    },
+    {
+      "id": 4,
+      "name": "Chuối",
+      "image": "https://example.com/images/chuoi.jpg",
+      "price": "15.000 đ",
+      "quantity": 50,
+      "date": "12/01/2024"
+    },
+    {
+      "id": 5,
+      "name": "Dưa Hấu",
+      "image": "https://example.com/images/dua-hau.jpg",
+      "price": "18.000 đ",
+      "quantity": 70,
+      "date": "03/04/2024"
+    },
+    {
+      "id": 6,
+      "name": "Nho",
+      "image": "https://example.com/images/nho.jpg",
+      "price": "20.000 đ",
+      "quantity": 90,
+      "date": "07/05/2024"
+    },
+    {
+      "id": 7,
+      "name": "Ổi",
+      "image": "https://example.com/images/oi.jpg",
+      "price": "10.000 đ",
+      "quantity": 120,
+      "date": "18/07/2024"
+    },
+    {
+      "id": 8,
+      "name": "Mận",
+      "image": "https://example.com/images/man.jpg",
+      "price": "22.000 đ",
+      "quantity": 80,
+      "date": "20/08/2024"
+    },
+    {
+      "id": 9,
+      "name": "Lê",
+      "image": "https://example.com/images/le.jpg",
+      "price": "14.000 đ",
+      "quantity": 60,
+      "date": "05/09/2024"
+    },
+    {
+      "id": 10,
+      "name": "Thanh Long",
+      "image": "https://example.com/images/thanh-long.jpg",
+      "price": "17.000 đ",
+      "quantity": 110,
+      "date": "30/10/2024"
+    }
+  ]
+}
