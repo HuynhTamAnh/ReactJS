@@ -16,3 +16,12 @@ export interface IUser {
   price: number;
   quantity: number;
 }
+export interface IStudent {
+  id: number;
+  name: string;
+  age: string;
+  address: string;
+  phone: number;
+  gender: boolean;
+  email: string;
+}
