@@ -1,114 +1,60 @@
 {
-  "books": [
+  "users": [
     {
       "id": 1,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": true,
-      "function": "2024-04-04"
+      "username": "admin",
+      "email": "hhh@gmail.com",
+      "password": "admin",
+      "phone": "01234567"
     },
     {
-      "id": 2,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "22-22-2222",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "hunghx",
+      "email": "hunghx@gmail.com",
+      "password": "11111111",
+      "phone": "09874386748",
+      "id": 37
     },
     {
-      "id": 3,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "hùng",
+      "email": "hunghx@gmail.com",
+      "password": "11111  111",
+      "phone": "0341616445",
+      "id": 38
     },
     {
-      "id": 4,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "tâm anh",
+      "email": "hta@gmail.com",
+      "password": "22222222",
+      "phone": "03494111",
+      "id": 39
     },
     {
-      "id": 5,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "h",
+      "email": "hta1@gmail.com",
+      "password": "11111111",
+      "phone": "2",
+      "id": 40
     },
     {
-      "id": 6,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "anh",
+      "email": "hta2@gmail.com",
+      "password": "33333333",
+      "phone": "13",
+      "id": 41
     },
     {
-      "id": 7,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
+      "username": "l",
+      "email": "l@gmail.com",
+      "password": "11111111",
+      "phone": "2",
+      "id": 42
     },
     {
-      "id": 8,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
-    },
-    {
-      "id": 9,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
-    },
-    {
-      "id": 10,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
-    },
-    {
-      "id": 11,
-      "name": "làm giàu",
-      "image": "https://i.pinimg.com/564x/ee/8f/bd/ee8fbd1d731637de6904438a1fcb3798.jpg",
-      "date_start": "11-11-1111",
-      "date_end": "22-22-1111",
-      "status": false,
-      "function": "2024-04-04"
-    }
-  ],
-  "students": [
-    {
-      "id": 1,
-      "name": "Nguyễn Văn B",
-      "age": "25",
-      "address": "Hà Nội",
-      "phone": "01234567",
-      "gender": false,
-      "email": "hh"
+      "username": "hoàng tử ếch",
+      "email": "khangtran@gmail.com",
+      "password": "12345678",
+      "phone": "0123456789",
+      "id": 43
     }
   ]
 }
