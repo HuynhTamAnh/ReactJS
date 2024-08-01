@@ -33,10 +33,15 @@ const LoginPage: React.FC = () => {
       ).unwrap();
       console.log("Login result:", result);
       message.success("Đăng nhập thành công!");
-      navigate("/dashboard");
+      //kiểm tra role nếu là admin thì chuyển hướng đến trang admin nếu là users thì chuyển hướng qua trang chủ bình thường
+      if (result.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login error:", error);
-      message.error(error as string);
+      message.error("Sai email hoặc mật khẩu!");
     }
   };
 
@@ -49,7 +54,9 @@ const LoginPage: React.FC = () => {
         className="w-full max-w-md"
       >
         <Card className="shadow-2xl bg-white">
-          <Title level={2}>Đăng nhập</Title>
+          <Title level={2} style={{ color: "lightblue" }}>
+            Đăng nhập
+          </Title>
           <Form
             name="normal_login"
             initialValues={{ remember: true }}
@@ -81,7 +88,9 @@ const LoginPage: React.FC = () => {
             </Form.Item>
             <Form.Item>
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Ghi nhớ đăng nhập</Checkbox>
+                <Checkbox style={{ color: "lightblue" }}>
+                  Ghi nhớ đăng nhập
+                </Checkbox>
               </Form.Item>
               <Link to="/forgot-password" className="float-right">
                 Quên mật khẩu
@@ -99,7 +108,10 @@ const LoginPage: React.FC = () => {
             </Form.Item>
           </Form>
           {error && <Text type="danger">{error}</Text>}
-          <Text className="block mt-4 text-gray-600">
+          <Text
+            className="block mt-4 text-gray-600"
+            style={{ color: "lightblue" }}
+          >
             <InfoCircleOutlined className="mr-1" />
             Bằng cách đăng nhập, bạn đồng ý với các điều khoản và điều kiện của
             chúng tôi.

@@ -15,16 +15,11 @@ export const createNewUsers: any = createAsyncThunk(
 
 export const loginUser: any = createAsyncThunk(
   "users/login",
-  async (data: { email: string; password: string }, { rejectWithValue }) => {
+  (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await loginApi(data);
-      console.log("Login API response:", response);
-      return response.data;
-    } catch (error) {
-      console.error("Login error:", error);
-      return rejectWithValue(
-        "Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu."
-      );
+      return loginApi(data);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -42,18 +37,26 @@ interface UsersState {
   users: IUsers[];
   loading: boolean;
   error: string | null;
+  userLogin: null | { email: string; phone: string; id: number; role: string };
 }
 
 const initialState: UsersState = {
   users: [],
   loading: false,
   error: null,
+  userLogin: null,
 };
 
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    //định nghĩa reducer
+    logout(state, action) {
+      localStorage.removeItem("accessToken");
+      return { ...state, userLogin: null };
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Create New Users
@@ -99,7 +102,10 @@ export const usersSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users.push(action.payload);
+        localStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        state.userLogin = action.payload.user;
+        console.log(action.payload);
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -110,3 +116,4 @@ export const usersSlice = createSlice({
 });
 
 export const { reducer } = usersSlice;
+export const { logout } = usersSlice.actions;
