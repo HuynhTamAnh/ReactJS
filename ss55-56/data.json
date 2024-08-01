@@ -1,60 +1,44 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "admin",
-      "email": "hhh@gmail.com",
-      "password": "admin",
-      "phone": "01234567"
-    },
-    {
-      "username": "hunghx",
-      "email": "hunghx@gmail.com",
-      "password": "11111111",
-      "phone": "09874386748",
-      "id": 37
-    },
-    {
-      "username": "hùng",
-      "email": "hunghx@gmail.com",
-      "password": "11111  111",
-      "phone": "0341616445",
-      "id": 38
-    },
-    {
-      "username": "tâm anh",
       "email": "hta@gmail.com",
-      "password": "22222222",
-      "phone": "03494111",
-      "id": 39
+      "password": "$2a$10$93mhGQlC6W6tBG8QZXDHP.FR06Io0KRJJ1yvgBntczCOrhpMBLC16",
+      "username": "hta",
+      "phone": "0768190298",
+      "role": "admin",
+      "avatar": "https://i.pinimg.com/564x/d0/d5/19/d0d519b384c2804a667d1bb5df1c09a4.jpg",
+      "id": 1
     },
     {
-      "username": "h",
-      "email": "hta1@gmail.com",
-      "password": "11111111",
-      "phone": "2",
-      "id": 40
+      "email": "htauser@gmail.com",
+      "password": "$2a$10$gxpTOXgve4noadRGPmreAemyxP3iITh1Szg.DHU5tIozvBxzyo2DK",
+      "username": "userEx",
+      "phone": "0768190298",
+      "avatar": "https://i.pinimg.com/736x/a0/33/4d/a0334d005900467ab0a48b261e2e2a56.jpg",
+      "id": 2
+    }
+  ],
+  "posts": [
+    {
+      "content": "bạo hành học sinh",
+      "image": [
+        "https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/438205829_3244345682528077_2959802656503866995_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=I9A-1OsJri4Q7kNvgHcwdhI&_nc_ht=scontent.fsgn2-9.fna&oh=00_AYD-TK3KJMoLOEnYrq8cSYpkVbbGdt8VjUXjTz0hQmUY1w&oe=66AE5E0A"
+      ],
+      "reactions": [],
+      "userId": 1,
+      "date": "2024-07-27T11:40:00:00Z",
+      "id": 1
     },
     {
-      "username": "anh",
-      "email": "hta2@gmail.com",
-      "password": "33333333",
-      "phone": "13",
-      "id": 41
-    },
-    {
-      "username": "l",
-      "email": "l@gmail.com",
-      "password": "11111111",
-      "phone": "2",
-      "id": 42
-    },
-    {
-      "username": "hoàng tử ếch",
-      "email": "khangtran@gmail.com",
-      "password": "12345678",
-      "phone": "0123456789",
-      "id": 43
+      "content": "bạo hành học sinh",
+      "image": [
+        "https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/289705971_2813831355579514_2173999425209474528_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=Sl1HZhvbtaEQ7kNvgEMFMg5&_nc_ht=scontent.fsgn2-7.fna&gid=AN3-W8VkTtvgQ7Ja6URSqSP&oh=00_AYDRELUx34xhP_A1Lh_WfaGCfRpKxwXOWTtfD7XChXTXeQ&oe=66AE5DA2",
+        "https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/453094070_1060597852362040_3267321962463644761_n.jpg?stp=dst-jpg_p180x540&_nc_cat=106&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=IpIXG5Gbh_4Q7kNvgG1wdR8&_nc_ht=scontent.fsgn2-9.fna&oh=00_AYBj9e9ipkyhp0MqbdxZNQIakagXG6ivg60MuMEA36wONw&oe=66AA4158"
+      ],
+      "reactions": [],
+      "userId": 1,
+      "date": "2024-07-27T11:40:00:00Z",
+      "id": 2
     }
   ]
 }
