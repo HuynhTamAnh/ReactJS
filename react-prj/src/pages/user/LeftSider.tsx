@@ -1,20 +1,25 @@
-import React from "react";
-import { Layout, Menu, Typography } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/slices/usersSlice";
 import {
-  HomeOutlined,
-  SearchOutlined,
-  CompassOutlined,
-  HeartOutlined,
-  PlusCircleOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
-
-const { Sider } = Layout;
-const { Title, Text } = Typography;
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import {
+  Home as HomeIcon,
+  Search as SearchIcon,
+  Explore as ExploreIcon,
+  Favorite as FavoriteIcon,
+  AddCircle as AddCircleIcon,
+  Person as PersonIcon,
+  ExitToApp as ExitToAppIcon,
+} from "@mui/icons-material";
 
 interface LeftSiderProps {
   showModal: () => void;
@@ -23,65 +28,74 @@ interface LeftSiderProps {
 const LeftSider: React.FC<LeftSiderProps> = ({ showModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState(location.pathname);
 
   const handleLogout = () => {
     dispatch(logout(""));
     navigate("/login");
   };
 
+  const menuItems = [
+    { key: "/", icon: <HomeIcon />, text: "Home" },
+    { key: "/search", icon: <SearchIcon />, text: "Search" },
+    { key: "/explore", icon: <ExploreIcon />, text: "Explore" },
+    { key: "/notifications", icon: <FavoriteIcon />, text: "Notifications" },
+    { key: "create", icon: <AddCircleIcon />, text: "Create" },
+    { key: "/profile", icon: <PersonIcon />, text: "Profile" },
+    { key: "logout", icon: <ExitToAppIcon />, text: "Logout" },
+  ];
+
+  const handleItemClick = (key: string) => {
+    setActiveItem(key);
+    if (key === "create") {
+      showModal();
+    } else if (key === "logout") {
+      handleLogout();
+    } else {
+      navigate(key);
+    }
+  };
+
   return (
-    <Sider
-      style={{
-        height: "100vh",
-        position: "fixed",
-        left: 0,
-        top: 0,
-        bottom: 0,
-        background: "#000",
-        zIndex: 1,
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: 250,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: 250,
+          boxSizing: "border-box",
+        },
       }}
-      width={200}
     >
-      <div className="logo" style={{ padding: "20px", textAlign: "center" }}>
-        <Link to="/">
-          <Title level={3} style={{ color: "#fff" }}>
+      <Box sx={{ overflow: "auto" }}>
+        <Typography variant="h6" sx={{ my: 2, textAlign: "center" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "#000" }}>
             Shinstagram
-          </Title>
-        </Link>
-      </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={["1"]}
-        style={{ background: "#000" }}
-      >
-        <Menu.Item key="1" icon={<HomeOutlined />}>
-          <Link to="/">
-            <Text style={{ color: "#fff" }}>Home</Text>
           </Link>
-        </Menu.Item>
-        <Menu.Item key="2" icon={<SearchOutlined />}>
-          <Text style={{ color: "#fff" }}>Search</Text>
-        </Menu.Item>
-        <Menu.Item key="3" icon={<CompassOutlined />}>
-          <Text style={{ color: "#fff" }}>Explore</Text>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<HeartOutlined />}>
-          <Text style={{ color: "#fff" }}>Notifications</Text>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<PlusCircleOutlined />} onClick={showModal}>
-          <Text style={{ color: "#fff" }}>Create</Text>
-        </Menu.Item>
-        <Menu.Item key="6" icon={<UserOutlined />}>
-          <Link to="profile" style={{ color: "#fff" }}>
-            Profile
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="7" icon={<LogoutOutlined />} onClick={handleLogout}>
-          <Text style={{ color: "#fff" }}>Logout</Text>
-        </Menu.Item>
-      </Menu>
-    </Sider>
+        </Typography>
+        <List>
+          {menuItems.map((item) => (
+            <ListItem
+              button
+              key={item.key}
+              onClick={() => handleItemClick(item.key)}
+              selected={activeItem === item.key}
+            >
+              <ListItemIcon
+                sx={{
+                  color: activeItem === item.key ? "primary.main" : "inherit",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
   );
 };
 

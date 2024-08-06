@@ -1,13 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Avatar, Image, Typography, Carousel } from "antd";
-import { HeartOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardActions,
+  Avatar,
+  IconButton,
+  Typography,
+  Box,
+} from "@mui/material";
+import {
+  Favorite as FavoriteIcon,
+  Send as SendIcon,
+} from "@mui/icons-material";
 import { IUsers, IPosts } from "../../interface";
 import { AppDispatch, RootState } from "../../store";
 import { getNewPosts } from "../../store/slices/postsSlice";
-
-const { Meta } = Card;
-const { Text } = Typography;
 
 const ContentPosts: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,49 +34,35 @@ const ContentPosts: React.FC = () => {
   return (
     <>
       {posts.map((post) => (
-        <Card
-          key={post.id}
-          style={{ marginBottom: 16, background: "#121212" }}
-          cover={
-            <Carousel>
-              {post.image.map((img, index) => (
-                <Image
-                  key={index}
-                  alt={`Post ${post.id} - Image ${index}`}
-                  src={img}
-                />
-              ))}
-            </Carousel>
-          }
-          actions={[
-            <HeartOutlined style={{ color: "#000" }} />,
-            <SendOutlined key="send" style={{ color: "#000" }} />,
-          ]}
-        >
-          <Meta
+        <Card key={post.id} sx={{ mb: 2, bgcolor: "background.paper" }}>
+          <CardHeader
             avatar={<Avatar src={userLogin?.avatar} />}
-            title={
-              <Text strong style={{ color: "#fff" }}>
-                {userLogin?.username}
-              </Text>
-            }
-            description={
-              <Text style={{ color: "#fff", fontSize: "20px" }}>
-                {post.content}
-              </Text>
-            }
+            title={userLogin?.username}
+            subheader={new Date(post.date).toLocaleDateString()}
           />
-          <Text style={{ color: "#aaa", display: "block", marginTop: 10 }}>
-            {new Date(post.date).toLocaleDateString()}
-          </Text>
-          <Text style={{ color: "#aaa", display: "block", marginTop: 5 }}>
-            Reactions: {post.reactions.join(", ")}
-          </Text>
+          <CardMedia
+            component="img"
+            height="300"
+            image={post.image[0]}
+            alt={`Post ${post.id}`}
+          />
+          <Box sx={{ p: 2 }}>
+            <Typography variant="body1">{post.content}</Typography>
+            <Typography variant="caption" color="text.secondary">
+              Reactions: {post.reactions.join(", ")}
+            </Typography>
+          </Box>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <SendIcon />
+            </IconButton>
+          </CardActions>
         </Card>
       ))}
-      {posts.length === 0 && (
-        <Text style={{ color: "#fff" }}>No posts available.</Text>
-      )}
+      {posts.length === 0 && <Typography>No posts available.</Typography>}
     </>
   );
 };

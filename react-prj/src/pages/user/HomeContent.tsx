@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Row, Col } from "antd";
+import { Grid } from "@mui/material";
 import { RootState } from "../../store";
 import { IUsers } from "../../interface";
 import ContentPosts from "./ContentPosts";
@@ -12,14 +12,14 @@ const HomeContent: React.FC = () => {
   ) as IUsers | null;
 
   return (
-    <Row gutter={[16, 16]}>
-      <Col span={16}>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={8}>
         <ContentPosts />
-      </Col>
-      <Col span={8}>
+      </Grid>
+      <Grid item xs={12} md={4}>
         <RightSider userLogin={userLogin} />
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 };
 

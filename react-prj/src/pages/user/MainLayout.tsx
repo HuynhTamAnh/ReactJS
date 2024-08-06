@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { Layout, Modal } from "antd";
+import { Box, Modal } from "@mui/material";
 import { Outlet } from "react-router-dom";
-// import Upload from "../"; // Adjust the path accordingly
-import LeftSider from "./LeftSider"; // Adjust the path accordingly
 import Upload from "../../firebase/configFirebase";
-
-const { Content } = Layout;
+import LeftSider from "./LeftSider";
 
 const MainLayout: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -20,29 +16,44 @@ const MainLayout: React.FC = () => {
   };
 
   const handleImageUpload = (imageUrl: string) => {
-    setUploadedImages((prevImages) => [imageUrl, ...prevImages]);
+    // Handle the uploaded image
     setIsModalVisible(false);
   };
 
   return (
-    <Layout style={{ minHeight: "100vh", background: "#000" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        bgcolor: "background.default",
+      }}
+    >
       <LeftSider showModal={showModal} />
-      <Layout
-        style={{ marginLeft: 200, background: "#000", minHeight: "100vh" }}
-      >
-        <Content style={{ padding: 24 }}>
-          <Outlet />
-        </Content>
-      </Layout>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, marginLeft: "250px" }}>
+        <Outlet />
+      </Box>
       <Modal
-        title="Upload Image"
         open={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
+        onClose={handleCancel}
+        aria-labelledby="modal-title"
       >
-        <Upload onClose={handleCancel} onImageUpload={handleImageUpload} />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <h2 id="modal-title">Upload Image</h2>
+          <Upload onClose={handleCancel} onImageUpload={handleImageUpload} />
+        </Box>
       </Modal>
-    </Layout>
+    </Box>
   );
 };
 
