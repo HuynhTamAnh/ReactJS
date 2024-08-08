@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Box, Modal } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Upload from "../../firebase/configFirebase";
 import LeftSider from "./LeftSider";
+import { RootState, AppDispatch } from "../../store";
+import { IUsers } from "../../interface";
+import { createNewPost } from "../../store/slices/postsSlice";
 
 const MainLayout: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const userLogin = useSelector(
+    (state: RootState) => state.usersSlice.userLogin
+  ) as IUsers | null;
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -16,7 +24,17 @@ const MainLayout: React.FC = () => {
   };
 
   const handleImageUpload = (imageUrl: string) => {
-    // Handle the uploaded image
+    if (userLogin) {
+      dispatch(
+        createNewPost({
+          userId: userLogin.id,
+          image: [imageUrl],
+          content: "", // Bạn có thể thêm một input để người dùng nhập nội dung
+          date: new Date().toISOString(),
+          reactions: [],
+        })
+      );
+    }
     setIsModalVisible(false);
   };
 
@@ -28,7 +46,7 @@ const MainLayout: React.FC = () => {
         bgcolor: "background.default",
       }}
     >
-      <LeftSider showModal={showModal} />
+      <LeftSider showModal={showModal} userId={userLogin?.id} />
       <Box component="main" sx={{ flexGrow: 1, p: 3, marginLeft: "250px" }}>
         <Outlet />
       </Box>
@@ -50,7 +68,11 @@ const MainLayout: React.FC = () => {
           }}
         >
           <h2 id="modal-title">Upload Image</h2>
-          <Upload onClose={handleCancel} onImageUpload={handleImageUpload} />
+          <Upload
+            onClose={handleCancel}
+            onImageUpload={handleImageUpload}
+            userId={userLogin?.id || 0}
+          />
         </Box>
       </Modal>
     </Box>

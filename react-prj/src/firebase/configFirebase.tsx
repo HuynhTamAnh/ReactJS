@@ -1,44 +1,46 @@
-// Trong file Upload.tsx
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../config/index";
 
 interface UploadProps {
-  onClose?: () => void;
-  onImageUpload?: (imageUrl: string) => void;
+  images: string[];
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Upload: React.FC<UploadProps> = ({ onClose, onImageUpload }) => {
+const Upload: React.FC<UploadProps> = ({ images, setImages }) => {
   const [uploading, setUploading] = useState(false);
 
-  const handleUpload = async (file: File) => {
+  const handleUpload = async (files: FileList) => {
     setUploading(true);
     try {
-      const storageRef = ref(storage, `images/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-      if (onImageUpload) {
-        onImageUpload(downloadUrl);
-      }
-      console.log("File uploaded successfully");
-      if (onClose) {
-        onClose();
-      }
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        return getDownloadURL(snapshot.ref);
+      });
+
+      const downloadUrls = await Promise.all(uploadPromises);
+      setImages((prevImages) => [...prevImages, ...downloadUrls]);
     } catch (err) {
       console.error(err);
-      console.error("Error uploading file. Please try again.");
+      console.error("Error uploading files. Please try again.");
     } finally {
       setUploading(false);
     }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      handleUpload(file);
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      handleUpload(files);
     }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   return (
@@ -49,6 +51,7 @@ const Upload: React.FC<UploadProps> = ({ onClose, onImageUpload }) => {
         id="raised-button-file"
         type="file"
         onChange={handleFileChange}
+        multiple
       />
       <label htmlFor="raised-button-file">
         <Button
@@ -59,9 +62,33 @@ const Upload: React.FC<UploadProps> = ({ onClose, onImageUpload }) => {
           }
           disabled={uploading}
         >
-          {uploading ? "Uploading" : "Select File"}
+          {uploading ? "Uploading" : "Select Files"}
         </Button>
       </label>
+
+      <div style={{ marginTop: 16, display: "flex", flexWrap: "wrap", gap: 8 }}>
+        {images.map((image, index) => (
+          <div key={index} style={{ position: "relative" }}>
+            <img
+              src={image}
+              alt={`Uploaded ${index}`}
+              style={{ width: 100, height: 100, objectFit: "cover" }}
+            />
+            <IconButton
+              size="small"
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                background: "rgba(255,255,255,0.7)",
+              }}
+              onClick={() => handleRemoveImage(index)}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

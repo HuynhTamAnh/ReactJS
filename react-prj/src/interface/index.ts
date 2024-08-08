@@ -3,8 +3,11 @@ export interface IUsers {
   username: string;
   email: string;
   password: string;
-  avatar: string;
+  avatar?: string;
   phone: string;
+  role: string;
+  follower: string;
+  following: string;
 }
 export interface IPosts {
   id: number;
@@ -12,5 +15,6 @@ export interface IPosts {
   image: string[];
   reactions: string[];
   userId: number;
-  date: Date;
+  date: string;
+  privacy: string;
 }

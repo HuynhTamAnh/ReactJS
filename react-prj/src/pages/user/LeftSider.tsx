@@ -23,16 +23,17 @@ import {
 
 interface LeftSiderProps {
   showModal: () => void;
+  userId: string | number | undefined;
 }
 
-const LeftSider: React.FC<LeftSiderProps> = ({ showModal }) => {
+const LeftSider: React.FC<LeftSiderProps> = ({ showModal, userId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
 
   const handleLogout = () => {
-    dispatch(logout(""));
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -42,7 +43,7 @@ const LeftSider: React.FC<LeftSiderProps> = ({ showModal }) => {
     { key: "/explore", icon: <ExploreIcon />, text: "Explore" },
     { key: "/notifications", icon: <FavoriteIcon />, text: "Notifications" },
     { key: "create", icon: <AddCircleIcon />, text: "Create" },
-    { key: "/profile", icon: <PersonIcon />, text: "Profile" },
+    { key: `/profile/${userId}`, icon: <PersonIcon />, text: "Profile" },
     { key: "logout", icon: <ExitToAppIcon />, text: "Logout" },
   ];
 

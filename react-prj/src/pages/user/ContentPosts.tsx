@@ -9,6 +9,8 @@ import {
   IconButton,
   Typography,
   Box,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import {
   Favorite as FavoriteIcon,
@@ -16,36 +18,69 @@ import {
 } from "@mui/icons-material";
 import { IUsers, IPosts } from "../../interface";
 import { AppDispatch, RootState } from "../../store";
-import { getNewPosts } from "../../store/slices/postsSlice";
+import {
+  getAllUsersInfo,
+  getNewPosts,
+  UserInfo,
+} from "../../store/slices/postsSlice";
+import { useNavigate } from "react-router-dom";
 
 const ContentPosts: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const userLogin = useSelector(
     (state: RootState) => state.usersSlice.userLogin
   ) as IUsers | null;
-  const posts = useSelector(
-    (state: RootState) => state.postsSlice.posts
-  ) as IPosts[];
+  const { posts, accounts } = useSelector(
+    (state: RootState) => state.postsSlice
+  );
 
   useEffect(() => {
     dispatch(getNewPosts());
-  }, [dispatch]);
+    dispatch(getAllUsersInfo());
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    const formattedDateString = dateString.replace(/:00Z$/, "Z");
+    return new Date(formattedDateString).toLocaleDateString();
+  };
+
+  const handleAvatarClick = (userId: number) => {
+    navigate(`/profile/${userId}`);
+  };
+  const getUserInfoById = (id: number): UserInfo => {
+    return accounts.find((user: UserInfo) => user.id === id);
+  };
 
   return (
     <>
-      {posts.map((post) => (
+      {posts.map((post: IPosts) => (
         <Card key={post.id} sx={{ mb: 2, bgcolor: "background.paper" }}>
           <CardHeader
-            avatar={<Avatar src={userLogin?.avatar} />}
-            title={userLogin?.username}
-            subheader={new Date(post.date).toLocaleDateString()}
+            avatar={
+              <Avatar
+                src={getUserInfoById(post.userId).avatar}
+                onClick={() => handleAvatarClick(post.userId)}
+                style={{ cursor: "pointer" }}
+              />
+            }
+            title={getUserInfoById(post.userId).name}
+            subheader={formatDate(post.date)}
           />
-          <CardMedia
-            component="img"
-            height="300"
-            image={post.image[0]}
-            alt={`Post ${post.id}`}
-          />
+          {post.image && post.image.length > 0 && (
+            <ImageList cols={post.image.length > 1 ? 2 : 1} rowHeight={300}>
+              {post.image.map((img, index) => (
+                <ImageListItem key={index}>
+                  <img
+                    src={img}
+                    alt={`Post ${post.id} - Image ${index + 1}`}
+                    loading="lazy"
+                    style={{ height: "300px", objectFit: "cover" }}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
           <Box sx={{ p: 2 }}>
             <Typography variant="body1">{post.content}</Typography>
             <Typography variant="caption" color="text.secondary">

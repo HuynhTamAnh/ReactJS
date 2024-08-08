@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IPosts } from "../../interface";
+import { IPosts, IUsers } from "../../interface";
 import { instance } from "../../service";
 
 // Async thunks
@@ -22,8 +22,12 @@ export const fetchUserPosts: any = createAsyncThunk<IPosts[], number>(
 export const createNewPost: any = createAsyncThunk<IPosts, Omit<IPosts, "id">>(
   "posts/createNewPost",
   async (data) => {
-    const response = await instance.post("posts", data);
-    return response.data;
+    const response = await instance.post("posts", {
+      ...data,
+      date: new Date().toISOString(),
+      reactions: [],
+    });
+    return response.data; // Đảm bảo trả về dữ liệu từ response
   }
 );
 
@@ -43,22 +47,38 @@ export const deletePost: any = createAsyncThunk<number, number>(
   }
 );
 
+export type UserInfo = {
+  id: number;
+  name: string;
+  avatar: string;
+};
+
 // Slice
 interface PostsState {
   posts: IPosts[];
   userPosts: IPosts[];
   loading: boolean;
   error: string | null;
+  accounts: UserInfo[];
 }
 
 const initialState: PostsState = {
   posts: [],
   userPosts: [],
+  accounts: [],
   loading: false,
   error: null,
 };
 
-export const postsSlice = createSlice({
+export const getAllUsersInfo: any = createAsyncThunk(
+  "posts/getAllUsersInfo",
+  async () => {
+    const res = await instance.get("/users");
+    return res.data;
+  }
+);
+
+const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
@@ -166,6 +186,16 @@ export const postsSlice = createSlice({
       .addCase(deletePost.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to delete post";
+      })
+      .addCase(getAllUsersInfo.fulfilled, (state, action) => {
+        state.accounts = action.payload.map((acc: IUsers) => {
+          let u = {
+            id: acc.id,
+            name: acc.username,
+            avatar: acc.avatar,
+          };
+          return u;
+        });
       });
   },
 });

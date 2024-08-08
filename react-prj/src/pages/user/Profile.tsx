@@ -1,8 +1,8 @@
+// Profile.tsx
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-  Toolbar,
   Typography,
   Avatar,
   Button,
@@ -10,46 +10,51 @@ import {
   Tab,
   Box,
   Grid,
-  Modal,
   Container,
   Badge,
 } from "@mui/material";
 import {
-  Home as HomeIcon,
-  Search as SearchIcon,
-  Explore as ExploreIcon,
-  FavoriteBorder as FavoriteBorderIcon,
-  Person as PersonIcon,
-  AddCircleOutline as AddCircleOutlineIcon,
   Settings as SettingsIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
-import Upload from "../../firebase/configFirebase";
 import { AppDispatch, RootState } from "../../store";
 import { IUsers, IPosts } from "../../interface";
-import { logout } from "../../store/slices/usersSlice";
+import {
+  logout,
+  updateUserProfile,
+  fetchUserProfile,
+} from "../../store/slices/usersSlice";
 import { fetchUserPosts } from "../../store/slices/postsSlice";
+import EditProfileModal from "./EditProfileModal";
+import PostModal from "./PostModal";
 
 const Profile: React.FC = () => {
+  const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const [selectedPost, setSelectedPost] = useState<IPosts | null>(null);
+
   const userLogin = useSelector(
     (state: RootState) => state.usersSlice.userLogin
+  ) as IUsers | null;
+  const profileUser = useSelector(
+    (state: RootState) => state.usersSlice.profileUser
   ) as IUsers | null;
   const userPosts = useSelector(
     (state: RootState) => state.postsSlice.userPosts
   ) as IPosts[];
 
   useEffect(() => {
-    if (userLogin) {
-      dispatch(fetchUserPosts(userLogin.id));
+    if (userId) {
+      dispatch(fetchUserProfile(userId));
+      dispatch(fetchUserPosts(userId));
     }
-  }, [dispatch, userLogin]);
+  }, [dispatch, userId]);
 
   const handleLogout = () => {
-    dispatch(logout(""));
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -57,9 +62,34 @@ const Profile: React.FC = () => {
     setTabValue(newValue);
   };
 
-  const handleImageUpload = (imageUrl: string) => {
-    console.log("Uploaded image URL:", imageUrl);
-    setIsModalOpen(false);
+  const handleEditProfile = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveProfile = async (updatedProfile: Partial<IUsers>) => {
+    if (userLogin) {
+      try {
+        await dispatch(
+          updateUserProfile({ id: userLogin.id, ...updatedProfile })
+        );
+        if (userId) {
+          dispatch(fetchUserProfile(userId));
+        }
+      } catch (error) {
+        console.error("Failed to update profile:", error);
+      }
+    }
+    setIsEditModalOpen(false);
+  };
+
+  const isOwnProfile = userLogin?.id === profileUser?.id;
+
+  const handlePostClick = (post: IPosts) => {
+    setSelectedPost(post);
+  };
+
+  const handleClosePostModal = () => {
+    setSelectedPost(null);
   };
 
   return (
@@ -69,42 +99,47 @@ const Profile: React.FC = () => {
           <Grid item xs={12} md={3} textAlign="center">
             <Avatar
               sx={{ width: 100, height: 100, mx: "auto" }}
-              src={userLogin?.avatar}
+              src={profileUser?.avatar}
             />
             <Typography variant="h6" sx={{ mt: 2 }}>
-              {userLogin?.username}
+              {profileUser?.username}
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h4" sx={{ flexGrow: 1 }}>
-                {userLogin?.username}
+                {profileUser?.username}
               </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  mx: 1,
-                  backgroundColor: "#333",
-                  padding: "5px 10px",
-                  fontSize: "0.875rem",
-                }}
-                startIcon={<SettingsIcon />}
-              >
-                Chỉnh sửa
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  mx: 1,
-                  backgroundColor: "#333",
-                  padding: "5px 10px",
-                  fontSize: "0.875rem",
-                }}
-                startIcon={<LogoutIcon />}
-                onClick={handleLogout}
-              >
-                Đăng xuất
-              </Button>
+              {isOwnProfile && (
+                <>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mx: 1,
+                      backgroundColor: "#333",
+                      padding: "5px 10px",
+                      fontSize: "0.875rem",
+                    }}
+                    startIcon={<SettingsIcon />}
+                    onClick={handleEditProfile}
+                  >
+                    Chỉnh sửa
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mx: 1,
+                      backgroundColor: "#333",
+                      padding: "5px 10px",
+                      fontSize: "0.875rem",
+                    }}
+                    startIcon={<LogoutIcon />}
+                    onClick={handleLogout}
+                  >
+                    Đăng xuất
+                  </Button>
+                </>
+              )}
             </Box>
             <Grid container spacing={2} sx={{ mt: 1 }}>
               <Grid item>
@@ -116,14 +151,20 @@ const Profile: React.FC = () => {
               </Grid>
               <Grid item>
                 <Typography variant="body1">
-                  <Badge badgeContent={100} color="primary">
+                  <Badge
+                    badgeContent={profileUser?.follower?.length || 0}
+                    color="primary"
+                  >
                     Người theo dõi
                   </Badge>
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant="body1">
-                  <Badge badgeContent={547} color="primary">
+                  <Badge
+                    badgeContent={profileUser?.following?.length || 0}
+                    color="primary"
+                  >
                     Đang theo dõi
                   </Badge>
                 </Typography>
@@ -143,16 +184,42 @@ const Profile: React.FC = () => {
               <Grid container spacing={2}>
                 {userPosts.map((post) => (
                   <Grid item xs={12} sm={6} md={4} key={post.id}>
-                    <img
-                      src={post.image[0]}
-                      alt={post.content}
-                      style={{
-                        width: "100%",
-                        height: "300px",
-                        objectFit: "cover",
-                        borderRadius: "8px",
+                    <Box
+                      sx={{
+                        position: "relative",
+                        paddingTop: "100%",
+                        cursor: "pointer",
+                        "&:hover": {
+                          opacity: 0.8,
+                        },
                       }}
-                    />
+                      onClick={() => handlePostClick(post)}
+                    >
+                      <img
+                        src={post.image[0]}
+                        alt={post.content}
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      {post.image.length > 1 && (
+                        <Badge
+                          badgeContent={post.image.length}
+                          color="primary"
+                          sx={{
+                            position: "absolute",
+                            top: 8,
+                            right: 8,
+                          }}
+                        />
+                      )}
+                    </Box>
                   </Grid>
                 ))}
               </Grid>
@@ -166,31 +233,28 @@ const Profile: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-      <Modal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="modal-title" variant="h6" component="h2">
-            Upload Image
-          </Typography>
-          <Upload
-            onClose={() => setIsModalOpen(false)}
-            onImageUpload={handleImageUpload}
-          />
-        </Box>
-      </Modal>
+      <EditProfileModal
+        open={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSaveProfile}
+        currentUser={userLogin}
+      />
+      {selectedPost && (
+        <PostModal
+          open={!!selectedPost}
+          onClose={handleClosePostModal}
+          post={selectedPost}
+        />
+      )}
     </Box>
   );
 };
 
-const TabPanel = (props: {
+const TabPanel: React.FC<{
   children?: React.ReactNode;
   value: number;
   index: number;
-}) => {
+}> = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -208,18 +272,6 @@ const TabPanel = (props: {
       )}
     </div>
   );
-};
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
 };
 
 export default Profile;

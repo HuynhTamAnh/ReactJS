@@ -1,13 +1,13 @@
 //cấu hình store
 
 import { configureStore } from "@reduxjs/toolkit";
-import { reducer } from "./slices/usersSlice";
-import { postsSlice } from "./slices/postsSlice";
+import { reducer as user } from "./slices/usersSlice";
+import { reducer as post } from "./slices/postsSlice";
 
 export const store: any = configureStore({
   reducer: {
-    usersSlice: reducer,
-    postsSlice: postsSlice.reducer,
+    usersSlice: user,
+    postsSlice: post,
   },
 });
 

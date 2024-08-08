@@ -15,7 +15,7 @@ const Router = () => {
       <Route path="/admin" element={<DashBoard />} />
       <Route path="/" element={<HomePage />}>
         <Route index element={<HomeContent />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
       </Route>
       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
